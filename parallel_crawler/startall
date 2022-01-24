@@ -1,0 +1,13 @@
+#!/bin/bash
+for i in $(seq 0 $(($1-1)))
+    # do echo $i
+    do (python crawler.py "$i") &
+done
+sleep 1
+# echo "outside"
+python seed.py
+
+trap 'kill $BGPID; exit' INT
+sleep 1024 &
+BGPID=$!
+sleep 1024
